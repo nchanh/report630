@@ -1,0 +1,30 @@
+.show-data .table-content {
+    max-width: 300px;
+}
+
+.show-data .table-note {
+    width: 200px;
+}
+
+.show-data .table-btn {
+    cursor: pointer;
+}
+
+.show-data .table-btn-update, .show-data .table-btn-delete {
+    font-size: 20px;
+    transition: 0.4s;
+    color: #000;
+}
+
+.show-data .table-btn-update:hover {
+    color: #ffc107;
+    font-size: 40px;
+    transition: 0.4s;
+}
+
+.show-data .table-btn-delete:hover {
+    color: #dc3545;
+    font-size: 40px;
+    transition: 0.4s;
+}
+
