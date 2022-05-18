@@ -28,35 +28,7 @@
       </div>
 
       <div class="input mt-5" id="inputs">
-        <div class="mb-3">
-          <div class="row">
-            <div class="col">
-              <div class="input-group">
-                <span class="input-group-text">Content</span>
-                <textarea
-                  class="form-control"
-                  rows="3"
-                  placeholder="..."
-                  value=""
-                  id="report-content"
-                ></textarea>
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group">
-                <span class="input-group-text">Note</span>
-                <textarea
-                  class="form-control"
-                  rows="3"
-                  placeholder="..."
-                  value=""
-                  id="report-note"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
+        <div class="mb-2">
           <div class="row">
             <div class="col">
               <div class="input-group mb-3">
@@ -99,22 +71,55 @@
         </div>
         <div class="mb-3">
           <div class="row">
-            <div class="col-11 text-end">
-              <button
-                type="button"
-                class="btn btn-danger"
-                onclick="cancelReport()"
-              >
-                Cancel
-              </button>
+            <div class="col">
+              <div class="input-group">
+                <span class="input-group-text">Content</span>
+                <textarea
+                  class="form-control"
+                  rows="3"
+                  placeholder="..."
+                  value=""
+                  id="report-content"
+                ></textarea>
+              </div>
             </div>
-            <div class="col-1 text-end">
+            <div class="col">
+              <div class="input-group">
+                <span class="input-group-text">Note</span>
+                <textarea
+                  class="form-control"
+                  rows="3"
+                  placeholder="..."
+                  value=""
+                  id="report-note"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="row">
+            <div class="col text-end">
               <button
                 type="button"
                 class="btn btn-success"
                 onclick="saveReport()"
               >
-                Save
+                <span id="text-btn-save"></span>
+              </button>
+              <button
+                type="button"
+                class="btn btn-warning"
+                onclick="cancelReport()"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                onclick="resetDataReports()"
+              >
+                Delete reports
               </button>
             </div>
           </div>
@@ -138,29 +143,7 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td scope="row" class="text-center">1</td>
-              <td class="table-content">
-                BX_SWR-1734
-                管理画面｜初回登録する際、CSVを何度もアップロードすると、保存ボタンを押していなくてもカテゴリと部署が登録される
-              </td>
-              <td class="table-note">
-                BX_SWR-1734
-                管理画面｜初回登録する際、CSVを何度もアップロードすると、保存ボタンを押していなくてもカテゴリと部署が登録される
-              </td>
-              <td class="text-center">
-                10:00 - 13:00 VN <br />
-                12:00 - 15:00 JP
-              </td>
-              <td class="text-center">120</td>
-              <td class="text-center">2</td>
-              <td class="text-center table-btn">
-                <span class="table-btn-update" onclick="updateReport()">U</span>
-                <span class="table-btn-delete" onclick="deleteReport()">D</span>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="print-reports"></tbody>
         </table>
       </div>
     </div>

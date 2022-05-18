@@ -6,6 +6,10 @@ let reports = [];
 
 // constructor
 this.getLocalStorage();
+if (reports.length > 0) {
+  this.printDataReports();
+}
+this.changeNaneButtonSave();
 
 // functions
 function saveReport() {
@@ -22,14 +26,34 @@ function saveReport() {
   }
 
   this.updateOrSaveReport(report);
-  console.log(reports);
 }
 
-function cancelReport() {}
+function cancelReport() {
+  this.resetForm();
+  this.changeNaneButtonSave();
+}
 
-function updateReport() {}
+function updateReport(id) {
+  const indexReport = reports.findIndex((r) => r.id === id);
+  const report = reports[indexReport];
+  this.setFormReport(
+    report.id,
+    report.content,
+    report.note,
+    report.timeStart,
+    report.timeEnd
+  );
+  this.changeNaneButtonSave(false);
+}
 
-function deleteReport() {}
+function deleteReport(id) {
+  if (window.confirm("Yes or no?")) {
+    const indexReport = reports.findIndex((r) => r.id === id);
+    reports.splice(indexReport, 1);
+    this.setLocalStorage(reports);
+    this.printDataReports();
+  }
+}
 
 function getDataInForm() {
   return {
@@ -42,6 +66,7 @@ function getDataInForm() {
     fullTimeJP: "-",
     countMinutes: "-",
     countHours: "-",
+    countHoursMinutes: "-",
   };
 }
 
@@ -50,9 +75,10 @@ function calculatorReport(report) {
     report.fullTimeVN =
       this.changeTimeJPToVN(report.timeStart) +
       " - " +
-      this.changeTimeJPToVN(report.timeEnd);
+      this.changeTimeJPToVN(report.timeEnd) +
+      " VN";
 
-    report.fullTimeJP = `${report.timeStart} - ${report.timeEnd}`;
+    report.fullTimeJP = `${report.timeStart} - ${report.timeEnd} JP`;
   }
 
   if (report.timeStart !== "" && report.timeEnd !== "") {
@@ -69,8 +95,14 @@ function calculatorReport(report) {
       diffMinutes -= 60;
     }
 
-    report.countMinutes = diffMinutes;
-    report.countHours = Math.round((diffMinutes / 60) * 100) / 100;
+    report.countMinutes = diffMinutes + "m";
+    report.countHours = Math.round((diffMinutes / 60) * 100) / 100 + "h";
+
+    const hours = Math.floor(diffMinutes / 60);
+    const minutes = diffMinutes % 60;
+    report.countHoursMinutes =
+      (diffMinutes % 60 === 0 || hours === 0 ? "-" : hours + "h") +
+      (diffMinutes % 60 === 0 || hours === 0 ? "" : minutes + "m");
   }
 
   return report;
@@ -94,23 +126,34 @@ function updateOrSaveReport(report) {
   report = this.calculatorReport(report);
 
   if (report.id === "" || reports.length === 0) {
-    report.id = reports.length + 1;
+    report.id = this.makeId();
     reports.push(report);
   } else {
-    const indexReport = reports.findIndex((r) => r.id === report.id);
-    console.log(indexReport);
+    const indexReport = reports.findIndex((r) => r.id === +report.id);
     reports[indexReport] = report;
   }
 
   this.setLocalStorage(reports);
+  this.resetForm();
+  this.printDataReports();
+}
+
+function setFormReport(
+  id = "",
+  content = "",
+  note = "",
+  timeStart = "",
+  timeEnd = ""
+) {
+  document.getElementById("report-id").value = id;
+  document.getElementById("report-content").value = content;
+  document.getElementById("report-note").value = note;
+  document.getElementById("report-time-start").value = timeStart;
+  document.getElementById("report-time-end").value = timeEnd;
 }
 
 function resetForm() {
-  document.getElementById("report-id").value = "";
-  document.getElementById("report-content").value = "";
-  document.getElementById("report-note").value = "";
-  document.getElementById("report-time-start").value = "";
-  document.getElementById("report-time-end").value = "";
+  this.setFormReport();
 }
 
 function setLocalStorage(data) {
@@ -122,4 +165,53 @@ function getLocalStorage() {
   if (dataReports) {
     reports = dataReports;
   }
+}
+
+function resetDataReports() {
+  if (window.confirm("Yes or no?")) {
+    reports = [];
+    this.setLocalStorage(reports);
+    this.printDataReports();
+  }
+}
+
+function printDataReports() {
+  let printReports = document.getElementById("print-reports");
+  printReports.innerHTML = "";
+  reports.forEach((report, i) => {
+    printReports.innerHTML += `<tr>
+          <td scope="row" class="text-center">${i + 1}</td>
+          <td class="table-content">${report.content}</td>
+          <td class="table-note">${report.note}</td>
+          <td class="text-center">
+            ${report.fullTimeVN} <br/>
+            ${report.fullTimeJP}
+          </td>
+          <td class="text-center">${report.countMinutes}</td>
+          <td class="text-center">
+            ${report.countHours} <br/>
+            ${report.countHoursMinutes}
+          </td>
+          <td class="text-center table-btn">
+            <span class="table-btn-update" onclick="updateReport(${
+              report.id
+            })">E</span>
+            <span class="table-btn-delete" onclick="deleteReport(${
+              report.id
+            })">D</span>
+          </td>
+        </tr>`;
+  });
+
+  this.changeNaneButtonSave();
+}
+
+function makeId() {
+  return (Math.random() + 1).toString(36).substring(5);
+}
+
+function changeNaneButtonSave(isSave = true) {
+  document.getElementById("text-btn-save").textContent = isSave
+    ? "Save"
+    : "Update";
 }
