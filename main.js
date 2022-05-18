@@ -10,6 +10,7 @@ if (reports.length > 0) {
   this.printDataReports();
 }
 this.changeNaneButtonSave();
+this.getCurrentTime();
 
 // functions
 function saveReport() {
@@ -214,4 +215,22 @@ function changeNaneButtonSave(isSave = true) {
   document.getElementById("text-btn-save").textContent = isSave
     ? "Save"
     : "Update";
+}
+
+function getCurrentTime() {
+  const today = new Date();
+  let hours = today.getHours();
+  let minutes = today.getMinutes();
+  let seconds = today.getSeconds();
+  let utc = today.getUTCDate();
+  minutes = checkTime(minutes);
+  seconds = checkTime(seconds);
+
+  document.getElementById(
+    "clock-24-hours"
+  ).innerHTML = `${hours}:${minutes}:${seconds}`;
+}
+
+function checkTime(time) {
+  return time < 10 ? "0" + time : time;
 }
