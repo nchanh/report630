@@ -25,7 +25,7 @@
     <div class="container">
       <div class="text-center mt-3 mb-5">
         <h1 class="animate-charcter">report630</h1>
-        <span id="clock-24-hours" onclick="getCurrentTime()"></span>
+        <span id="clock-24-hours"></span>
       </div>
 
       <div class="input mt-2" id="inputs">
@@ -46,25 +46,35 @@
             </div>
             <div class="col">
               <div class="input-group mb-3">
-                <span class="input-group-text">Time start (JP)</span>
+                <span
+                  class="input-group-text cursor-pointer"
+                  onclick="changeInputTimeStart()"
+                  >Time start (JP)</span
+                >
                 <input
                   type="time"
                   class="form-control"
                   value=""
                   id="report-time-start"
                   placeholder="Time start"
+                  onclick="getCurrentTime()"
                 />
               </div>
             </div>
             <div class="col">
               <div class="input-group mb-3">
-                <span class="input-group-text">Time end (JP)</span>
+                <span
+                  class="input-group-text cursor-pointer"
+                  onclick="changeInputTimeEnd()"
+                  >Time end (JP)</span
+                >
                 <input
                   type="time"
                   class="form-control"
                   value=""
                   id="report-time-end"
                   placeholder="Time end"
+                  onclick="getCurrentTime()"
                 />
               </div>
             </div>

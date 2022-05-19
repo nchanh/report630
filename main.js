@@ -130,7 +130,7 @@ function updateOrSaveReport(report) {
     report.id = this.makeId();
     reports.push(report);
   } else {
-    const indexReport = reports.findIndex((r) => r.id === +report.id);
+    const indexReport = reports.findIndex((r) => r.id === report.id);
     reports[indexReport] = report;
   }
 
@@ -182,16 +182,40 @@ function printDataReports() {
   reports.forEach((report, i) => {
     printReports.innerHTML += `<tr>
           <td scope="row" class="text-center">${i + 1}</td>
-          <td class="table-content">${report.content}</td>
-          <td class="table-note">${report.note}</td>
+          <td class="table-content" id="table-content-${
+            report.id
+          }" onclick="copyText('${report.content}', 'table-content-${
+      report.id
+    }')">${report.content}</td>
+          <td class="table-note" id="table-note-${
+            report.id
+          }" onclick="copyText('${report.note}', 'table-note-${report.id}')">${
+      report.note
+    }</td>
           <td class="text-center">
-            ${report.fullTimeVN} <br/>
-            ${report.fullTimeJP}
+            <span id="table-fullTimeVN-${report.id}" onclick="copyText('${
+      report.fullTimeVN
+    }', 'table-fullTimeVN-${report.id}')">${report.fullTimeVN}</span> <br/>
+            <span id="table-fullTimeJP-${report.id}" onclick="copyText('${
+      report.fullTimeJP
+    }', 'table-fullTimeJP-${report.id}')">${report.fullTimeJP}</span>
           </td>
-          <td class="text-center">${report.countMinutes}</td>
+          <td class="text-center" id="table-countMinutes-${
+            report.id
+          }" onclick="copyText('${report.countMinutes}', 'table-countMinutes-${
+      report.id
+    }')">${report.countMinutes}</td>
           <td class="text-center">
-            ${report.countHours} <br/>
-            ${report.countHoursMinutes}
+            <span id="table-countHours-${report.id}" onclick="copyText('${
+      report.countHours
+    }', 'table-countHours-${report.id}')">${report.countHours}</span> <br/>
+            <span id="table-countHoursMinutes-${
+              report.id
+            }" onclick="copyText('${
+      report.countHoursMinutes
+    }', 'table-countHoursMinutes-${report.id}')">${
+      report.countHoursMinutes
+    }</span>
           </td>
           <td class="text-center table-btn">
             <span class="table-btn-update" onclick="updateReport('${
@@ -200,6 +224,9 @@ function printDataReports() {
             <span class="table-btn-delete" onclick="deleteReport('${
               report.id
             }')">D</span>
+            <span class="table-btn-copy" onclick="copyReport('${
+              report.id
+            }')">C</span>
           </td>
         </tr>`;
   });
@@ -233,4 +260,51 @@ function getCurrentTime() {
 
 function checkTime(time) {
   return time < 10 ? "0" + time : time;
+}
+
+function changeInputTimeStart() {
+  let timeStart = document.getElementById("report-time-start").type;
+  if (timeStart === "time") {
+    document.getElementById("report-time-start").type = "text";
+  } else {
+    document.getElementById("report-time-start").type = "time";
+  }
+}
+
+function changeInputTimeEnd() {
+  let timeStart = document.getElementById("report-time-end").type;
+  if (timeStart === "time") {
+    document.getElementById("report-time-end").type = "text";
+  } else {
+    document.getElementById("report-time-end").type = "time";
+  }
+}
+
+function copyText(text, id) {
+  navigator.clipboard.writeText(text);
+
+  document.getElementById(id).classList.add("table-active-text");
+  setTimeout(function () {
+    document.getElementById(id).classList.remove("table-active-text");
+  }, 1000);
+}
+
+function copyReport(id) {
+  const indexReport = reports.findIndex((r) => r.id === id);
+  const report = reports[indexReport];
+
+  let time = report.countHoursMinutes;
+  
+  if (report.countHoursMinutes === '-') {
+    time = report.countHours;
+  }
+
+  let countHours = report.countHours.replace("h", "");
+  if (Math.floor(countHours) < 1) {
+    time = report.countMinutes;
+  }
+
+  navigator.clipboard.writeText(
+    `${report.content}\t${time} ${report.fullTimeJP}\t${report.note}`
+  );
 }
