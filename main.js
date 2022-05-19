@@ -194,12 +194,12 @@ function printDataReports() {
             ${report.countHoursMinutes}
           </td>
           <td class="text-center table-btn">
-            <span class="table-btn-update" onclick="updateReport(${
+            <span class="table-btn-update" onclick="updateReport('${
               report.id
-            })">E</span>
-            <span class="table-btn-delete" onclick="deleteReport(${
+            }')">E</span>
+            <span class="table-btn-delete" onclick="deleteReport('${
               report.id
-            })">D</span>
+            }')">D</span>
           </td>
         </tr>`;
   });
