@@ -90,8 +90,8 @@ function calculatorReport(report) {
     let diffMinutes = parseInt((dateEnd - dateStart) / (1000 * 60), 10);
 
     if (
-      (dateStart <= beetweenStart && dateEnd >= beetweenStart) ||
-      (dateStart <= beetweenEnd && dateEnd >= beetweenEnd)
+      (dateStart < beetweenStart && dateEnd > beetweenStart) ||
+      (dateStart < beetweenEnd && dateEnd > beetweenEnd)
     ) {
       diffMinutes -= 60;
     }
