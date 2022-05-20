@@ -232,6 +232,7 @@ function printDataReports() {
   });
 
   this.changeNaneButtonSave();
+  this.countSumDay();
 }
 
 function makeId() {
@@ -294,8 +295,8 @@ function copyReport(id) {
   const report = reports[indexReport];
 
   let time = report.countHoursMinutes;
-  
-  if (report.countHoursMinutes === '-') {
+
+  if (report.countHoursMinutes === "-") {
     time = report.countHours;
   }
 
@@ -307,4 +308,21 @@ function copyReport(id) {
   navigator.clipboard.writeText(
     `${report.content}\t${time} ${report.fullTimeJP}\t${report.note}`
   );
+}
+
+function countSumDay() {
+  const dataReports = reports;
+  let sumMinuteDay = 0;
+  let sumHourDay = 0;
+
+  if (dataReports.length !== 0) {
+    dataReports.forEach((report) => {
+      sumMinuteDay += +report.countMinutes.replace("m", "");
+    });
+  
+    sumHourDay = Math.round((sumMinuteDay / 60) * 100) / 100;
+  }
+
+  document.getElementById("sum-hour-day").innerHTML = sumMinuteDay;
+  document.getElementById("sum-minute-day").innerHTML = sumHourDay;
 }
