@@ -317,12 +317,13 @@ function countSumDay() {
 
   if (dataReports.length !== 0) {
     dataReports.forEach((report) => {
-      sumMinuteDay += +report.countMinutes.replace("m", "");
+      sumMinuteDay +=
+        report.countMinutes !== "-" ? +report.countMinutes.replace("m", "") : 0;
     });
-  
+
     sumHourDay = Math.round((sumMinuteDay / 60) * 100) / 100;
   }
 
-  document.getElementById("sum-hour-day").innerHTML = sumMinuteDay;
-  document.getElementById("sum-minute-day").innerHTML = sumHourDay;
+  document.getElementById("sum-minute-day").innerHTML = sumMinuteDay;
+  document.getElementById("sum-hour-day").innerHTML = sumHourDay;
 }
