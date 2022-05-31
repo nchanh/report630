@@ -306,7 +306,7 @@ function copyReport(id) {
   }
 
   navigator.clipboard.writeText(
-    `${report.content}\t${time} ${report.fullTimeJP}\t${report.note}`
+    `${report.content}\t${time}\t${report.note}`
   );
 }
 
