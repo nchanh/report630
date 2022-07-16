@@ -7,7 +7,7 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+      />
 
     <!-- Bootstrap CSS v5.2.0 -->
     <link
@@ -15,17 +15,55 @@
       rel="stylesheet"
       integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
       crossorigin="anonymous"
-    />
+      />
 
     <!-- Main css -->
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="bg-pattern.css">
+    <link rel="stylesheet" href="moon.css">
   </head>
 
-  <body>
+  <body id="bg-body">
+
+    <div class="btn-group-sm button-group" role="group" aria-label="Basic
+      checkbox toggle button group">
+      <input type="radio"
+        class="btn-check"
+        name="btnradio"
+        id="btnradio1"
+        autocomplete="off"
+        onclick="setBackgroudLS(1)"
+      >
+      <label class="btn btn-outline-dark" for="btnradio1">none</label>
+      <input type="radio"
+        class="btn-check"
+        name="btnradio"
+        id="btnradio2"
+        autocomplete="off"
+        onclick="setBackgroudLS(2)"
+      >
+      <label class="btn btn-outline-dark" for="btnradio2">pattern</label>
+      <input type="radio"
+        class="btn-check"
+        name="btnradio"
+        id="btnradio3"
+        autocomplete="off"
+        onclick="setBackgroudLS(3)"
+      >
+      <label class="btn btn-outline-dark" for="btnradio3">moon</label>
+    </div>
+
+    <div id="bg-moon">
+      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/moon2.png" alt="">
+      <div class="stars"></div>
+      <div class="twinkling"></div>
+      <div class="clouds"></div>
+    </div>
+
     <div class="container">
       <div class="text-center mt-3 mb-5">
         <h1 class="animate-charcter">report630</h1>
-        <span id="clock-24-hours"></span>
+        <span class="text-color" id="clock-24-hours"></span>
       </div>
 
       <div class="input mt-2" id="inputs">
@@ -41,16 +79,28 @@
                   value=""
                   id="report-id"
                   readonly
-                />
+                  />
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="input-group mb-3">
+                <span
+                  class="input-group-text">Hours</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  value=""
+                  id="report-hours"
+                  placeholder="Hours"
+                  onclick="getCurrentTime()"
+                  />
               </div>
             </div>
             <div class="col">
               <div class="input-group mb-3">
                 <span
                   class="input-group-text cursor-pointer"
-                  onclick="changeInputTimeStart()"
-                  >Time start (JP)</span
-                >
+                  onclick="changeInputTimeStart()">Time start (JP)</span>
                 <input
                   type="time"
                   class="form-control"
@@ -58,16 +108,14 @@
                   id="report-time-start"
                   placeholder="Time start"
                   onclick="getCurrentTime()"
-                />
+                  />
               </div>
             </div>
             <div class="col">
               <div class="input-group mb-3">
                 <span
                   class="input-group-text cursor-pointer"
-                  onclick="changeInputTimeEnd()"
-                  >Time end (JP)</span
-                >
+                  onclick="changeInputTimeEnd()">Time end (JP)</span>
                 <input
                   type="time"
                   class="form-control"
@@ -75,7 +123,7 @@
                   id="report-time-end"
                   placeholder="Time end"
                   onclick="getCurrentTime()"
-                />
+                  />
               </div>
             </div>
           </div>
@@ -90,8 +138,7 @@
                   rows="3"
                   placeholder="..."
                   value=""
-                  id="report-content"
-                ></textarea>
+                  id="report-content"></textarea>
               </div>
             </div>
             <div class="col">
@@ -102,8 +149,7 @@
                   rows="3"
                   placeholder="..."
                   value=""
-                  id="report-note"
-                ></textarea>
+                  id="report-note"></textarea>
               </div>
             </div>
           </div>
@@ -114,22 +160,19 @@
               <button
                 type="button"
                 class="btn btn-success"
-                onclick="saveReport()"
-              >
+                onclick="saveReport()">
                 <span id="text-btn-save">Save</span>
               </button>
               <button
                 type="button"
                 class="btn btn-warning"
-                onclick="cancelReport()"
-              >
+                onclick="cancelReport()">
                 Cancel
               </button>
               <button
                 type="button"
                 class="btn btn-danger"
-                onclick="resetDataReports()"
-              >
+                onclick="resetDataReports()">
                 Delete reports
               </button>
             </div>
@@ -140,7 +183,7 @@
       <hr class="my-5" />
 
       <div class="show-data">
-        <div class="col text-end">
+        <div class="col text-end text-color">
           <p>
             Hours:
             <span id="sum-hour-day"></span>/8, minutes:
@@ -148,10 +191,10 @@
           </p>
         </div>
         <table
-          class="table table-striped|sm|bordered|hover|inverse table-inverse table-responsive"
-        >
+          class="table table-striped|sm|bordered|hover|inverse table-inverse
+          table-responsive">
           <thead class="thead-inverse|thead-default">
-            <tr class="text-center">
+            <tr class="text-center text-color">
               <th>No.</th>
               <th>Content</th>
               <th>Note</th>
@@ -161,7 +204,7 @@
               <th></th>
             </tr>
           </thead>
-          <tbody id="print-reports"></tbody>
+          <tbody class="text-color" id="print-reports"></tbody>
         </table>
       </div>
     </div>
@@ -170,13 +213,11 @@
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
       integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous"></script>
 
     <!-- Main style -->
     <script src="main.js"></script>
