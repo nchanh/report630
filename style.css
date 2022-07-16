@@ -69,3 +69,13 @@
     font-size: 25px;
     transition: 0.4s;
 }
+
+.button-group {
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+.text-color {
+    color: #eee;
+}

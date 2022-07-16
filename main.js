@@ -5,6 +5,7 @@ const BASE_DATE = "2022-01-01";
 let reports = [];
 
 // constructor
+this.getBackgroudLS();
 this.getLocalStorage();
 if (reports.length > 0) {
   this.printDataReports();
@@ -42,7 +43,8 @@ function updateReport(id) {
     report.content,
     report.note,
     report.timeStart,
-    report.timeEnd
+    report.timeEnd,
+    report.hours
   );
   this.changeNaneButtonSave(false);
 }
@@ -63,6 +65,7 @@ function getDataInForm() {
     note: (note = document.getElementById("report-note").value),
     timeStart: document.getElementById("report-time-start").value,
     timeEnd: document.getElementById("report-time-end").value,
+    hours: document.getElementById("report-hours").value,
     fullTimeVN: "-",
     fullTimeJP: "-",
     countMinutes: "-",
@@ -82,7 +85,11 @@ function calculatorReport(report) {
     report.fullTimeJP = `${report.timeStart} - ${report.timeEnd} JP`;
   }
 
-  if (report.timeStart !== "" && report.timeEnd !== "") {
+  const hourInput = document.getElementById("report-hours").value;
+  if (hourInput) {
+    report.countHours = hourInput + "h";
+    report.countHoursMinutes = "";
+  } else if (report.timeStart !== "" && report.timeEnd !== "") {
     let beetweenStart = new Date(`${BASE_DATE} 14:00:00`);
     let beetweenEnd = new Date(`${BASE_DATE} 15:00:00`);
     let dateStart = new Date(`${BASE_DATE} ${report.timeStart}`);
@@ -104,7 +111,7 @@ function calculatorReport(report) {
     report.countHoursMinutes =
       (diffMinutes % 60 === 0 || hours === 0 ? "-" : hours + "h") +
       (diffMinutes % 60 === 0 || hours === 0 ? "" : minutes + "m");
-  }
+  } 
 
   return report;
 }
@@ -144,13 +151,15 @@ function setFormReport(
   content = "",
   note = "",
   timeStart = "",
-  timeEnd = ""
+  timeEnd = "",
+  hours = ""
 ) {
   document.getElementById("report-id").value = id;
   document.getElementById("report-content").value = content;
   document.getElementById("report-note").value = note;
   document.getElementById("report-time-start").value = timeStart;
   document.getElementById("report-time-end").value = timeEnd;
+  document.getElementById("report-hours").value = hours;
 }
 
 function resetForm() {
@@ -178,7 +187,10 @@ function resetDataReports() {
 
 function printDataReports() {
   let printReports = document.getElementById("print-reports");
-  printReports.innerHTML = "";
+  if (printReports) {
+    printReports.innerHTML = "";    
+  }
+
   reports.forEach((report, i) => {
     printReports.innerHTML += `<tr>
           <td scope="row" class="text-center">${i + 1}</td>
@@ -326,4 +338,49 @@ function countSumDay() {
 
   document.getElementById("sum-minute-day").innerHTML = sumMinuteDay;
   document.getElementById("sum-hour-day").innerHTML = sumHourDay;
+}
+function setBackgroudLS(numberBg) {
+  localStorage.setItem("bg", JSON.stringify(numberBg));
+  this.showBackground(numberBg);
+}
+
+function getBackgroudLS() {
+  let numberBg = JSON.parse(localStorage.getItem("bg"));
+  if (numberBg) {
+    document.getElementById("btnradio" + numberBg).checked = true;
+  } else {
+    numberBg = 1;
+  }
+
+  this.showBackground(numberBg);
+}
+
+function showBackground(numberBg) {
+  let classBackground = "none";
+  let colorBackground = "black";
+
+  document.getElementById("bg-moon").style.display = 'none';
+
+  switch (numberBg) {
+    case 2:
+      classBackground = "wrapper";
+      colorBackground = "white";
+      break;
+
+    case 3:
+      classBackground = "background-container";
+      colorBackground = "white";
+      document.getElementById("bg-moon").style.display = 'block'
+      break;
+
+    default:
+      break;
+  }
+
+  document.getElementById("bg-body").className = classBackground;
+
+  const textColors = document.getElementsByClassName("text-color");
+	for(let i = 0; i < textColors.length; i++){
+		textColors[i].style.color = colorBackground;
+	}
 }
