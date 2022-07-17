@@ -75,7 +75,9 @@ function getDataInForm() {
 }
 
 function calculatorReport(report) {
-  if (report.timeStart !== "" || report.timeEnd !== "") {
+  const hourInput = document.getElementById("report-hours").value;
+
+  if ((report.timeStart !== "" || report.timeEnd !== "") && !hourInput) {
     report.fullTimeVN =
       this.changeTimeJPToVN(report.timeStart) +
       " - " +
@@ -85,7 +87,6 @@ function calculatorReport(report) {
     report.fullTimeJP = `${report.timeStart} - ${report.timeEnd} JP`;
   }
 
-  const hourInput = document.getElementById("report-hours").value;
   if (hourInput) {
     report.countHours = hourInput + "h";
     report.countHoursMinutes = "";
@@ -262,7 +263,6 @@ function getCurrentTime() {
   let hours = today.getHours();
   let minutes = today.getMinutes();
   let seconds = today.getSeconds();
-  let utc = today.getUTCDate();
   minutes = checkTime(minutes);
   seconds = checkTime(seconds);
 
@@ -328,9 +328,15 @@ function countSumDay() {
   let sumHourDay = 0;
 
   if (dataReports.length !== 0) {
+    console.log(dataReports);
     dataReports.forEach((report) => {
-      sumMinuteDay +=
+      const reportHours = report.hours;
+      if (reportHours) {
+        sumMinuteDay += parseInt(reportHours) * 60;
+      } else {
+        sumMinuteDay +=
         report.countMinutes !== "-" ? +report.countMinutes.replace("m", "") : 0;
+      }
     });
 
     sumHourDay = Math.round((sumMinuteDay / 60) * 100) / 100;
