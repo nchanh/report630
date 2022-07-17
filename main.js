@@ -328,7 +328,6 @@ function countSumDay() {
   let sumHourDay = 0;
 
   if (dataReports.length !== 0) {
-    console.log(dataReports);
     dataReports.forEach((report) => {
       const reportHours = report.hours;
       if (reportHours) {
@@ -389,4 +388,11 @@ function showBackground(numberBg) {
 	for(let i = 0; i < textColors.length; i++){
 		textColors[i].style.color = colorBackground;
 	}
+}
+
+function setTextColor(color) {
+  const textColors = document.getElementsByClassName("text-color");
+  for(let i = 0; i < textColors.length; i++) {
+    textColors[i].style.color = color;
+  }
 }

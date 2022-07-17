@@ -51,6 +51,15 @@
         onclick="setBackgroudLS(3)"
       >
       <label class="btn btn-outline-dark" for="btnradio3">moon</label>
+
+      <input type="color"
+        class="btn-check"
+        name="btnradio"
+        id="btnradio5"
+        autocomplete="off"
+        oninput="setTextColor(this.value)"
+      >
+      <label class="btn btn-outline-dark" for="btnradio5">text-color</label>
     </div>
 
     <div id="bg-moon">
@@ -221,5 +230,7 @@
 
     <!-- Main style -->
     <script src="main.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
   </body>
 </html>
