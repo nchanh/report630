@@ -331,7 +331,7 @@ function countSumDay() {
     dataReports.forEach((report) => {
       const reportHours = report.hours;
       if (reportHours) {
-        sumMinuteDay += parseInt(reportHours) * 60;
+        sumMinuteDay += parseFloat(reportHours) * 60;
       } else {
         sumMinuteDay +=
         report.countMinutes !== "-" ? +report.countMinutes.replace("m", "") : 0;
