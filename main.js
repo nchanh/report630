@@ -317,6 +317,10 @@ function copyReport(id) {
     time = report.countMinutes;
   }
 
+  if (report.hours) {
+    time = +report.hours;
+  }
+
   navigator.clipboard.writeText(
     `${report.content}\t${time}\t${report.note}`
   );
