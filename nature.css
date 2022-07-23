@@ -22,7 +22,7 @@
         500px 200px,
         1000px,
         400px 260px;
-    animation: 100s para infinite linear;
+    animation: 10   0s para infinite linear;
 }
 
 @keyframes para {
