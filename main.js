@@ -382,16 +382,19 @@ function showBackground(numberBg) {
       document.getElementById("bg-moon").style.display = 'block'
       break;
 
+    case 4:
+      classBackground = "bg-nature";
+      colorBackground = "white";
+      break;
+
     default:
       break;
   }
 
   document.getElementById("bg-body").className = classBackground;
 
-  const textColors = document.getElementsByClassName("text-color");
-	for(let i = 0; i < textColors.length; i++){
-		textColors[i].style.color = colorBackground;
-	}
+  this.setColorByClassname("text-color", colorBackground);
+  this.setColorButtons(colorBackground);
 }
 
 function setTextColor(color) {
@@ -399,4 +402,17 @@ function setTextColor(color) {
   for(let i = 0; i < textColors.length; i++) {
     textColors[i].style.color = color;
   }
+}
+
+function setColorByClassname(className, colorBackground) {
+  const textColors = document.getElementsByClassName(className);
+	for(let i = 0; i < textColors.length; i++){
+		textColors[i].style.color = colorBackground;
+	}
+}
+
+function setColorButtons(colorBackground) {
+  this.setColorByClassname("table-btn-update", colorBackground);
+  this.setColorByClassname("table-btn-delete", colorBackground);
+  this.setColorByClassname("table-btn-copy", colorBackground);
 }

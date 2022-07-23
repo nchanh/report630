@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="bg-pattern.css">
     <link rel="stylesheet" href="moon.css">
+    <link rel="stylesheet" href="nature.css">
   </head>
 
   <body id="bg-body">
@@ -35,6 +36,7 @@
         onclick="setBackgroudLS(1)"
       >
       <label class="btn btn-outline-dark" for="btnradio1">none</label>
+
       <input type="radio"
         class="btn-check"
         name="btnradio"
@@ -43,6 +45,7 @@
         onclick="setBackgroudLS(2)"
       >
       <label class="btn btn-outline-dark" for="btnradio2">pattern</label>
+
       <input type="radio"
         class="btn-check"
         name="btnradio"
@@ -51,6 +54,15 @@
         onclick="setBackgroudLS(3)"
       >
       <label class="btn btn-outline-dark" for="btnradio3">moon</label>
+
+      <input type="radio"
+        class="btn-check"
+        name="btnradio"
+        id="btnradio4"
+        autocomplete="off"
+        onclick="setBackgroudLS(4)"
+      >
+      <label class="btn btn-outline-dark" for="btnradio4">nature</label>
 
       <input type="color"
         class="btn-check"
@@ -191,14 +203,15 @@
 
       <hr class="my-5" />
 
+      <div class="col text-end text-color">
+        <p>
+          Hours:
+          <span id="sum-hour-day"></span>/8, minutes:
+          <span id="sum-minute-day"></span>/480
+        </p>
+      </div>
+
       <div class="show-data">
-        <div class="col text-end text-color">
-          <p>
-            Hours:
-            <span id="sum-hour-day"></span>/8, minutes:
-            <span id="sum-minute-day"></span>/480
-          </p>
-        </div>
         <table
           class="table table-striped|sm|bordered|hover|inverse table-inverse
           table-responsive">
